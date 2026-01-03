@@ -1,13 +1,11 @@
 import { useEffect, useState } from 'react'
 
 import '@/App.css'
-import CheckMap from '@/pages/CheckMap'
-import React = require('react')
-import RegistryDatabase from '@/pages/RegistryDatabase'
 import ConfigProvider from 'antd/es/config-provider'
 import { theme } from 'antd'
 import ThemeWrapper from './pages/ThemeWrapper'
 import { BrowserRouter } from 'react-router-dom'
+import React from 'react'
 function App() {
   const [isDarkMode, setIsDarkMode] = useState(false);
   useEffect(() => {
