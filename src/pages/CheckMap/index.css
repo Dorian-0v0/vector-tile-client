@@ -1,0 +1,18 @@
+
+
+
+
+
+
+#map {
+  flex: 1;
+  height: calc(100vh - 64px);
+  /* 不再 width: 100vw，由 flex 控制 */
+}
+
+.map-container-wrapper {
+  display: flex;
+  width: 100vw;
+  height: 100vh;
+  position: relative;
+}

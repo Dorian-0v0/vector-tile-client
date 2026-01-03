@@ -1,0 +1,10 @@
+html,
+body,
+#root {
+  overflow: hidden;
+  /* 关键代码：隐藏滚动条并禁止滚动 */
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}

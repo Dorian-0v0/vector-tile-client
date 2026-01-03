@@ -1,0 +1,6 @@
+/* 让 Menu 项更紧凑 */
+.compact-menu .ant-menu-horizontal > .ant-menu-item {
+  padding: 0 10px !important;
+  margin: 0 3px !important;
+  font-size: 14px !important;
+}
