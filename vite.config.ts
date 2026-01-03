@@ -5,6 +5,7 @@ import path from 'path'
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [react()],
+  base: "/vector-tile-client/",
   resolve: {
     alias: {
       '@': path.resolve(__dirname, './src')

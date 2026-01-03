@@ -83,7 +83,7 @@ const ThemeWrapper: React.FC<{
           <Route path="/layer" element={<CheckMap />} />
           <Route path="/about" element={<About/>} />
           {/* 默认重定向 */}
-          <Route path="/" element={<Navigate to="/db" replace />} />
+          <Route path="/" element={<Navigate to="vector-tile-client/db" replace />} />
         </Routes>
 
       </Content>

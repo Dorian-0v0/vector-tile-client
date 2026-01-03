@@ -28,7 +28,7 @@ function App() {
         },
       }}
     >
-      <BrowserRouter><ThemeWrapper isDarkMode={isDarkMode} setIsDarkMode={setIsDarkMode} /></BrowserRouter>
+      <BrowserRouter basename="/vector-tile-client"><ThemeWrapper isDarkMode={isDarkMode} setIsDarkMode={setIsDarkMode} /></BrowserRouter>
 
 
 
