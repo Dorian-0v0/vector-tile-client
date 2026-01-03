@@ -1,13 +1,29 @@
 {
-  
   "compilerOptions": {
-     "esModuleInterop": true,
+     "moduleResolution": "bundler",
+    
+    // ✅ 或者使用 node16/nodenext（如果你的 Node.js >= 16）
+    // "moduleResolution": "node16",
+
+    // ✅ 编译目标至少为 ES2020（推荐 ES2022）
+    "target": "ES2022",
+
+    // ✅ 启用 ES 模块语法
+    "module": "ESNext",
+
+    // 其他常见配置（保持即可）
+    "strict": true,
+    "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
     "jsx": "react",
     "baseUrl": ".",
     "paths": {
-      "@/*": ["src/*"]
+      "@/*": [
+        "src/*"
+      ]
     }
   },
-  "include": ["src"]
+  "include": [
+    "src"
+  ]
 }
