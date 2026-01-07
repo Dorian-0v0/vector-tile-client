@@ -11,11 +11,11 @@ import { getPanelTitle, getPanelCom, getPanelIcon } from "@/components/ButtonDyn
 export default function CheckMap() {
   const { token } = theme.useToken(); // 必须在 ConfigProvider 作用域内调用
   const { updateZoomAndCenterAndMap, getMap } = useMapStore()
-  const [visiblePanel, setVisiblePanel] = useState<string | null>(null);
+  const [visiblePanel, setVisiblePanel] = useState<string | null>('addLayer');
 
   // 创建适配函数
   const handleToggle = (key: string) => {
-    setVisiblePanel(prev => prev === key ? null : key);
+    setVisiblePanel(key);
   };
 
   useEffect(() => {
@@ -69,11 +69,14 @@ export default function CheckMap() {
           </Splitter.Panel>
         </Splitter>
       </Splitter.Panel>
-      {visiblePanel && (
+   
         <Splitter.Panel
-          defaultSize="15%"
+          defaultSize="0"
           min="12%"
           max="30%"
+          collapsible={true}
+          // 设置图标
+          
 
         >
           {/* Panel Header */}
@@ -94,7 +97,7 @@ export default function CheckMap() {
               {getPanelTitle(visiblePanel)}
             </Space>
             {/* <span>{}</span> */}
-            <Button
+            {/* <Button
               type="text"
               icon={<CloseOutlined />}
               onClick={() => setVisiblePanel(null)}
@@ -104,14 +107,14 @@ export default function CheckMap() {
                 minWidth: 'auto',
                 height: 'auto'
               }}
-            />
+            /> */}
           </div>
           {getPanelCom(visiblePanel)
             ? React.createElement(getPanelCom(visiblePanel)!)
             : null}
           {/* </div> */}
         </Splitter.Panel>
-      )}
+
     </Splitter>
   );
 }
