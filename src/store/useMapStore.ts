@@ -1,9 +1,10 @@
 // src/store/useCounterStore.ts
 import ClientMap from '@/models/ClientMap';
-import MapView from '@geoscene/core/views/MapView';
+
 import { create } from 'zustand';
 
 interface MapState {
+    clientmap: ClientMap | null;
     zoomAndCenterAndMap: {
         zoom: number;
         center: [number, number];
@@ -19,12 +20,14 @@ interface MapState {
 }
 
 export const useMapStore = create<MapState>((set, get) => ({
+    clientmap: null,
     zoomAndCenterAndMap: null,
     updateZoomAndCenterAndMap: (mapAndView) => set(() => ({ zoomAndCenterAndMap: mapAndView })),
     getMap: (container) => {
         const state = get();
         // 注意：这里假设ClientMap返回MapView实例，如果ClientMap本身就是MapView则直接返回
-        return new ClientMap(container, null, null, state.zoomAndCenterAndMap);
+        state.clientmap = new ClientMap(container, null, null, state.zoomAndCenterAndMap);
+        return state.clientmap;
     },
     reset: () => set(() => ({ zoomAndCenterAndMap: null })),
 }));

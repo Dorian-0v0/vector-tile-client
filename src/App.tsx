@@ -12,8 +12,8 @@ function App() {
     // 获取id为mapcontainer的容器
     const mapContainer = document.getElementById('map');
     if (mapContainer) {
-     // 给图层添加滤镜
-     mapContainer.style.filter = isDarkMode ? 'brightness(0.88) contrast(0.95) grayscale(0) hue-rotate(180deg) opacity(1) saturate(2.5) sepia(0.5) invert(1)' : 'none';
+      // 给图层添加滤镜
+      mapContainer.style.filter = isDarkMode ? 'brightness(0.88) contrast(0.95) grayscale(0) hue-rotate(180deg) opacity(1) saturate(2.5) sepia(0.5) invert(1)' : 'none';
     }
   }, [isDarkMode]);
   return (
@@ -23,6 +23,14 @@ function App() {
         token: {
           borderRadius: 0, // 👈 关键：全局取消圆角
 
+
+        },
+        components: {
+          Splitter: {
+            /* 这里是你的组件 token */
+            splitBarSize: 5,
+
+          },
         },
       }}
     >

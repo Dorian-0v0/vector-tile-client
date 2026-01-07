@@ -1,6 +1,6 @@
 import React, { FC } from 'react';
 import { Form, Input, Button, Card, Space } from 'antd';
-import { LockOutlined, UserOutlined, DatabaseOutlined, GlobalOutlined, AppstoreOutlined, KeyOutlined } from '@ant-design/icons';
+import { LockOutlined, UserOutlined, DatabaseOutlined, GlobalOutlined, KeyOutlined } from '@ant-design/icons';
 
 const RegistryDatabase: FC = () => {
   const [form] = Form.useForm();
@@ -79,16 +79,7 @@ const RegistryDatabase: FC = () => {
           <Input.Password prefix={<LockOutlined />} placeholder="输入密码" />
         </Form.Item>
 
-        <Form.Item
-         style={{
-          marginTop: '-1vh' 
-        }}
-          name="schema"
-          label="架构 (Schema)"
-          tooltip="可选，留空则使用默认 schema"
-        >
-          <Input prefix={<AppstoreOutlined />} placeholder="例如：public" />
-        </Form.Item>
+        
 
         <Form.Item>
           <Space>

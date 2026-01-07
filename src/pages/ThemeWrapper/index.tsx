@@ -6,6 +6,9 @@ import RegistryDatabase from "@/pages/RegistryDatabase";
 import { Navigate, NavLink, Route, Routes } from 'react-router-dom';
 import './index.css'
 import About from "@/pages/About";
+import HeartMapIcon from "@/assets/HomeIcon";
+
+
 // 子组件必须包裹在 ConfigProvider 内才能使用 useToken
 const ThemeWrapper: React.FC<{
   isDarkMode: boolean;
@@ -15,12 +18,12 @@ const ThemeWrapper: React.FC<{
 
   const menuItems = [
     {
-      key: '/db',
-      label: <NavLink to="/db">当前数据库</NavLink>,
+      key: '/registry',
+      label: <NavLink to="/registry">注册数据库</NavLink>,
     },
     {
-      key: '/registry',
-      label: <NavLink to="/registry">切换数据库</NavLink>,
+      key: '/db',
+      label: <NavLink to="/db">当前数据库</NavLink>,
     },
     {
       key: '/layer',
@@ -45,9 +48,11 @@ const ThemeWrapper: React.FC<{
           padding: '0 16px', // 减少左右留白
         }}
       >
-        {/* 左侧 Logo */}
-        <div style={{ fontSize: '16px', fontWeight: 'bold' }}>LOGO</div>
-        <div style={{ fontSize: '16px', fontWeight: 'bold', width: '8vw', marginLeft: '2vw' }}>layername</div>
+        {/* 左侧 Logo 区域 */}
+        <div style={{ display: 'flex', alignItems: 'center' }}>
+          <HeartMapIcon></HeartMapIcon>
+        </div>
+
 
         {/* 中间导航菜单 —— 更紧凑 */}
         <Menu
@@ -81,7 +86,7 @@ const ThemeWrapper: React.FC<{
           <Route path="/db" element={<RegistryDatabase />} />
           <Route path="/registry" element={<RegistryDatabase />} />
           <Route path="/layer" element={<CheckMap />} />
-          <Route path="/about" element={<About/>} />
+          <Route path="/about" element={<About />} />
           {/* 默认重定向 */}
           <Route path="/" element={<Navigate to="vector-tile-client/db" replace />} />
         </Routes>

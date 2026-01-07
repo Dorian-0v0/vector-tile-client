@@ -6,7 +6,8 @@
 
 #map {
   flex: 1;
-  height: calc(100vh - 64px);
+  /* height: calc(100vh - 64px); */
+  height: 100%;
   /* 不再 width: 100vw，由 flex 控制 */
 }
 
