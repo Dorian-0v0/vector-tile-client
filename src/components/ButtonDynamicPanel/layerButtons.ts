@@ -3,7 +3,7 @@ import BaseMap from '@/components/ButtonDynamicPanel/Panels/BaseMap';
 import AddLayer from '@/components/ButtonDynamicPanel/Panels/AddLayer';
 import Measure from '@/components/ButtonDynamicPanel/Panels/Measure';
 import Draw from '@/components/ButtonDynamicPanel/Panels/Draw';
-import Locate from '@/components/ButtonDynamicPanel/Panels/locate';
+import Locate from '@/components/ButtonDynamicPanel/Panels/Locate';
 import ToolBox from '@/components/ButtonDynamicPanel/Panels/ToolBox';
 import Print from '@/components/ButtonDynamicPanel/Panels/Print';
 import Ai from '@/components/ButtonDynamicPanel/Panels/Ai';
