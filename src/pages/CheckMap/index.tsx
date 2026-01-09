@@ -5,8 +5,8 @@ import React from "react";
 import LayerController from "@/components/LayerController";
 import { useMapStore } from '@/store/useMapStore';
 
-import { CloseOutlined, EnvironmentOutlined } from "@ant-design/icons";
-import { getPanelTitle, getPanelCom, getPanelIcon } from "@/components/ButtonDynamicPanel/layerButtons";
+import { CloseOutlined } from "@ant-design/icons";
+import { getPanelTitle, getPanelCom, getPanelIcon, PanelRenderer } from "@/components/ButtonDynamicPanel/layerButtons";
 
 export default function CheckMap() {
   const { token } = theme.useToken(); // 必须在 ConfigProvider 作用域内调用
@@ -15,7 +15,7 @@ export default function CheckMap() {
 
   // 创建适配函数
   const handleToggle = (key: string) => {
-    setVisiblePanel(prev => prev === key ? null : key);
+    setVisiblePanel(key);
   };
 
   useEffect(() => {
@@ -44,7 +44,7 @@ export default function CheckMap() {
     <Splitter style={{ height: 'calc(100vh - 64px)' }} draggerIcon>
       {/* 左侧面板 */}
       <Splitter.Panel defaultSize="15%" min="8%" max="27%" >
-        <LayerController onToggle={handleToggle} />
+
       </Splitter.Panel>
       {/* 右侧面板：嵌套垂直分割器 */}
       <Splitter.Panel>
@@ -69,48 +69,21 @@ export default function CheckMap() {
           </Splitter.Panel>
         </Splitter>
       </Splitter.Panel>
-      {visiblePanel && (
-        <Splitter.Panel
-          defaultSize="15%"
-          min="12%"
-          max="30%"
-        >
-          {/* Panel Header */}
-          <div
-            style={{
-              display: 'flex',
-              justifyContent: 'space-between',
-              alignItems: 'center',
-              padding: '5px 5px',
-              borderBottom: '2px solid #a5a1a1ff',
-              borderTop: '2px solid #a5a1a1ff',
-              fontWeight: 800,
-              fontSize: '16px',
-            }}
-          >
-            <Space>
-             {getPanelIcon(visiblePanel) ? React.createElement(getPanelIcon(visiblePanel)!) : null}
-              {getPanelTitle(visiblePanel)}
-            </Space>
-            {/* <span>{}</span> */}
-            <Button
-              type="text"
-              icon={<CloseOutlined />}
-              onClick={() => setVisiblePanel(null)}
-              aria-label="关闭面板"
-              style={{
-                padding: '4px',
-                minWidth: 'auto',
-                height: 'auto'
-              }}
-            />
-          </div>
-          {getPanelCom(visiblePanel)
-            ? React.createElement(getPanelCom(visiblePanel)!)
-            : null}
-          {/* </div> */}
-        </Splitter.Panel>
-      )}
+
+      <Splitter.Panel
+        defaultSize="15%"
+        min="14%"
+        max="26%"
+      >
+        <LayerController onToggle={handleToggle} />
+        {/* Panel Header */}
+        {visiblePanel && (
+          <PanelRenderer
+            visiblePanel={visiblePanel}
+            setVisiblePanel={setVisiblePanel}
+          />)}
+      </Splitter.Panel>
+
     </Splitter>
   );
 }

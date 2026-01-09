@@ -9,7 +9,7 @@ export default function LayerController({ onToggle }: LayerControllerProps) {
  
 
   return (
-    <div style={{ padding: '6px', overflowY: 'auto', height: '100%' }}>
+    <div style={{ padding: '6px', overflowY: 'auto' }}>
      {LAYER_BUTTONS.map(btn => {
         const IconComponent = btn.icon; // icon 是 React 组件
         return (

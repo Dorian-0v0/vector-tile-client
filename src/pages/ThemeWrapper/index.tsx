@@ -17,6 +17,10 @@ const ThemeWrapper: React.FC<{
   const { token } = theme.useToken(); // 必须在 ConfigProvider 作用域内调用
 
   const menuItems = [
+       {
+      key: '/map',
+      label: <NavLink to="/map">瓦片预览</NavLink>,
+    },
     {
       key: '/registry',
       label: <NavLink to="/registry">注册数据库</NavLink>,
@@ -25,10 +29,7 @@ const ThemeWrapper: React.FC<{
       key: '/db',
       label: <NavLink to="/db">当前数据库</NavLink>,
     },
-    {
-      key: '/layer',
-      label: <NavLink to="/layer">瓦片预览</NavLink>,
-    },
+ 
     {
       key: '/about',
       label: <NavLink to="/about">关于我们</NavLink>,
@@ -85,10 +86,10 @@ const ThemeWrapper: React.FC<{
         <Routes>
           <Route path="/db" element={<RegistryDatabase />} />
           <Route path="/registry" element={<RegistryDatabase />} />
-          <Route path="/layer" element={<CheckMap />} />
+          <Route path="/map" element={<CheckMap />} />
           <Route path="/about" element={<About />} />
           {/* 默认重定向 */}
-          <Route path="/" element={<Navigate to="vector-tile-client/db" replace />} />
+          <Route path="/" element={<Navigate to="/map" replace />} />
         </Routes>
 
       </Content>
