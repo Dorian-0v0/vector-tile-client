@@ -11,9 +11,9 @@ interface LayerFormData {
 }
 
 export default function AddLayer() {
-  const { clientmap } = useMapStore();
+  const { clientmap,updateIsAddNew } = useMapStore();
   const [form] = Form.useForm();
-  
+
   // 用于动态更新 Placeholder，虽然 Form 接管了数据，但为了 UI 提示保留这个 State
   const [currentType, setCurrentType] = useState<string>('矢量瓦片');
 
@@ -26,9 +26,10 @@ export default function AddLayer() {
       return;
     }
 
- 
-      clientmap.addLayerByURL(url, urlType, name);
+
+    clientmap.addLayerByURL(url, urlType, name)
     
+
   };
 
   return (
@@ -65,9 +66,9 @@ export default function AddLayer() {
             { type: 'url', warningOnly: true, message: '请输入合法的 URL 格式' } // 可选：URL格式警告
           ]}
         >
-          <Input 
-            placeholder={`请输入 ${currentType} URL 地址`} 
-            allowClear 
+          <Input
+            placeholder={`请输入 ${currentType} URL 地址`}
+            allowClear
           />
         </Form.Item>
 
@@ -76,8 +77,8 @@ export default function AddLayer() {
           label="图层名称"
           name="name"
         >
-          <Input 
-            placeholder={`请输入 ${currentType} 图层名称（可选）`} 
+          <Input
+            placeholder={`请输入 ${currentType} 图层名称（可选）`}
             allowClear
           />
         </Form.Item>

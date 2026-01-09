@@ -4,6 +4,8 @@ import ClientMap from '@/models/ClientMap';
 import { create } from 'zustand';
 
 interface MapState {
+    isAddNew: boolean;
+    updateIsAddNew: () => void;
     clientmap: ClientMap | null;
     zoomAndCenterAndMap: {
         zoom: number;
@@ -20,6 +22,8 @@ interface MapState {
 }
 
 export const useMapStore = create<MapState>((set, get) => ({
+    isAddNew: false,
+    updateIsAddNew: () => set(() => ({ isAddNew:!get().isAddNew })),
     clientmap: null,
     zoomAndCenterAndMap: null,
     updateZoomAndCenterAndMap: (mapAndView) => set(() => ({ zoomAndCenterAndMap: mapAndView })),

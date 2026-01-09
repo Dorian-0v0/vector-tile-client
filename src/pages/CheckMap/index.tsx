@@ -7,6 +7,7 @@ import { useMapStore } from '@/store/useMapStore';
 
 import { CloseOutlined } from "@ant-design/icons";
 import { getPanelTitle, getPanelCom, getPanelIcon, PanelRenderer } from "@/components/ButtonDynamicPanel/layerButtons";
+import LayerList from "@/components/LayerList/LayerList";
 
 export default function CheckMap() {
   const { token } = theme.useToken(); // 必须在 ConfigProvider 作用域内调用
@@ -26,6 +27,7 @@ export default function CheckMap() {
       mapContainer.style.filter = token.colorBgElevated == "#ffffff" ? 'none' : 'brightness(0.88) contrast(0.95) grayscale(0) hue-rotate(180deg) opacity(1) saturate(2.5) sepia(0.5) invert(1)';
     }
     const map = getMap('map');
+    map?.updateLayerList()  
     return () => {
       // 获取view的zoom、center、map属性
       if (map?.view?.center) {
@@ -43,8 +45,8 @@ export default function CheckMap() {
   return (
     <Splitter style={{ height: 'calc(100vh - 64px)' }} draggerIcon>
       {/* 左侧面板 */}
-      <Splitter.Panel defaultSize="15%" min="8%" max="27%" >
-
+      <Splitter.Panel defaultSize="15%" min="10%" max="27%" >
+        <LayerList></LayerList>
       </Splitter.Panel>
       {/* 右侧面板：嵌套垂直分割器 */}
       <Splitter.Panel>

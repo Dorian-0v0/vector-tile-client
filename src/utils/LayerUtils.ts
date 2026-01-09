@@ -9,7 +9,7 @@ export function getRandomBrightColor() {
 }
 
 
-export async function setRandomFeatureLayerRenderer(layer :Layer) {
+export async function setRandomFeatureLayerRenderer(layer: Layer) {
     try {
         await layer.load();
         const randomColor = getRandomBrightColor();
@@ -46,3 +46,19 @@ export async function setRandomFeatureLayerRenderer(layer :Layer) {
         console.error("设置随机颜色失败", error);
     }
 }
+
+
+export function getLayerName(item : any) {
+    const title = item.title;
+    if (title?.[0] === '%') {
+        const name = item?.sourceJSON?.name;
+        if (name != null) {
+            item.title = name;
+            return name;
+        }
+        const outName = decodeURIComponent(title);
+        item.title = outName;
+        return outName;
+    }
+    return title;
+};

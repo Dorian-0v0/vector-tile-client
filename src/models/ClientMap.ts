@@ -7,14 +7,65 @@ import WMSLayer from "@geoscene/core/layers/WMSLayer";
 import VectorTileLayer from "@geoscene/core/layers/VectorTileLayer";
 import Layer from "@geoscene/core/layers/Layer.js";
 import WMTSLayer from "@geoscene/core/layers/WMTSLayer";
-
+import Basemap from '@geoscene/core/Basemap';
 import { message } from "antd";
-import { setRandomFeatureLayerRenderer } from "@/utils/FeatureLayer";
+import { getLayerName, setRandomFeatureLayerRenderer } from "@/utils/LayerUtils";
+import { useMapStore } from "@/store/useMapStore";
 
+
+const tiandituVector = Basemap.fromId("tianditu-vector");
+tiandituVector.thumbnailUrl = "./public/images/天地图矢量.png";
+
+
+const tiandituImage = Basemap.fromId("tianditu-image");
+tiandituImage.thumbnailUrl = "./public/images/天地图影像.png";
 export default class ClientMap {
     public view: null | MapView = null;
     public bbox: number[] = [73.5, 3.8, 135.0, 58.9];
     public spatialReference = { wkid: 4326 };
+    public layerList: any = null;
+
+    public wmtsLayer = [
+        tiandituVector,
+        tiandituImage,
+        {
+            id: "Arcgis-World-Imagery",
+            title: "ArcGIS-影像底图",
+            thumbnailUrl: "./public/images/ArcGIS-影像.png",
+            baseLayers: [
+                new WebTileLayer({
+                    urlTemplate: "https://server.arcgisonline.com/arcgis/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}.png"
+                })
+            ]
+        },
+        {
+            baseLayers: [
+                new WebTileLayer({
+                    urlTemplate: "https://webst0{subDomain}.is.autonavi.com/appmaptile?lang=zh_cn&size=1&scale=1&style=7&x={x}&y={y}&z={z}",
+                    subDomains: ["0", "1", "2", "3", "4"]
+                })
+            ],
+            title: "高德矢量底图(火星坐标系)",
+            id: "gaode-ve-basemap",
+            thumbnailUrl: "./public/images/高德地图矢量.png"
+        },
+        {
+            baseLayers: [
+                new WebTileLayer({
+                    urlTemplate: "https://webst0{subDomain}.is.autonavi.com/appmaptile?lang=zh_cn&size=1&scale=1&style=6&x={x}&y={y}&z={z}",
+                    subDomains: ["0", "1", "2", "3", "4"],
+                })
+            ],
+            title: "高德影像底图(火星坐标系)",
+            id: "gaode-im-basemap",
+            thumbnailUrl: "./public/images/高德地图影像.png"
+        },
+        {
+            baseLayers: [],
+            title: "空白底图",
+            id: "empty-basemap",
+        }
+    ];
 
     public constructor(
         container: string,
@@ -35,14 +86,14 @@ export default class ClientMap {
             if (bbox) this.bbox = bbox;
             if (spatialReference) this.spatialReference = spatialReference;
 
-            // 创建 ArcGIS World Imagery 的 WebTileLayer（等效于 WMTS 效果）
-            const imageryLayer = new WebTileLayer({
-                urlTemplate: "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
-                copyright: "ArcGIS World Imagery"
-            });
+            // // 创建 ArcGIS World Imagery 的 WebTileLayer（等效于 WMTS 效果）
+            // const imageryLayer = new WebTileLayer({
+            //     urlTemplate: "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
+            //     copyright: "ArcGIS World Imagery"
+            // });
 
             const map = new Map({
-                layers: [imageryLayer] // 作为唯一底图图层
+                basemap: this.wmtsLayer[0] // 作为唯一底图图层
             });
 
             this.view = new MapView({
@@ -57,6 +108,9 @@ export default class ClientMap {
                 })
             });
         }
+        console.log("this.view", this.view);
+        // this.updateLayerList()
+         
     }
 
 
@@ -110,7 +164,7 @@ export default class ClientMap {
                 (resLayer) => {
                     setRandomFeatureLayerRenderer(resLayer)
                     debugger
-                    resLayer.title = layerName || resLayer.title || `无标题${layerType}图层`;
+                    resLayer.title = getLayerName(resLayer) || resLayer.title || `无标题${layerType}图层`;
                     resLayer.popupTemplate = {
                         title: resLayer.title,
                         content: [{
@@ -123,6 +177,7 @@ export default class ClientMap {
                         }]
                     };
                     message.success(`${layerType} 图层加载成功`);
+                    this.updateLayerList();
                 },
                 (error: Error) => {
                     console.error(`${layerType} 图层加载错误:`, error);
@@ -134,4 +189,15 @@ export default class ClientMap {
             message.error('地图未正确初始化，无法添加图层');
         }
     }
+
+
+    // 更新图层列表
+    public updateLayerList() {
+        if (this.view) {
+            this.layerList = this.view.map.layers.toArray();
+            useMapStore.getState().updateIsAddNew()
+        }
+
+    }
+
 }
