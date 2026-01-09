@@ -164,7 +164,7 @@ export default class ClientMap {
                 (resLayer) => {
                     setRandomFeatureLayerRenderer(resLayer)
                     debugger
-                    resLayer.title = getLayerName(resLayer) || resLayer.title || `无标题${layerType}图层`;
+                    resLayer.title = layerName || getLayerName(resLayer) || `无标题${layerType}图层`;
                     resLayer.popupTemplate = {
                         title: resLayer.title,
                         content: [{
@@ -194,10 +194,9 @@ export default class ClientMap {
     // 更新图层列表
     public updateLayerList() {
         if (this.view) {
-            this.layerList = this.view.map.layers.toArray();
+            this.layerList = this.view.map.layers.toArray().reverse();
             useMapStore.getState().updateIsAddNew()
         }
-
     }
 
 }

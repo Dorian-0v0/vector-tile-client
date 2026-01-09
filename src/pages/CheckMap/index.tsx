@@ -8,7 +8,8 @@ import { useMapStore } from '@/store/useMapStore';
 import { CloseOutlined } from "@ant-design/icons";
 import { getPanelTitle, getPanelCom, getPanelIcon, PanelRenderer } from "@/components/ButtonDynamicPanel/layerButtons";
 import LayerList from "@/components/LayerList/LayerList";
-
+import TestDnd1 from "@/components/LayerList/testdnd1";
+import { LayerList1 } from "@/components/LayerList/testdnd2";
 export default function CheckMap() {
   const { token } = theme.useToken(); // 必须在 ConfigProvider 作用域内调用
   const { updateZoomAndCenterAndMap, getMap } = useMapStore()
@@ -46,7 +47,8 @@ export default function CheckMap() {
     <Splitter style={{ height: 'calc(100vh - 64px)' }} draggerIcon>
       {/* 左侧面板 */}
       <Splitter.Panel defaultSize="15%" min="10%" max="27%" >
-        <LayerList></LayerList>
+        {/* <LayerList></LayerList> */}
+        <LayerList1></LayerList1>
       </Splitter.Panel>
       {/* 右侧面板：嵌套垂直分割器 */}
       <Splitter.Panel>
