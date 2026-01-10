@@ -19,7 +19,7 @@ export default function LayerController({ onToggle }: LayerControllerProps) {
             // shape="circle" // 圆形按钮更适配图标
             icon={<IconComponent />}
             onClick={() => onToggle(btn.key)}
-            style={{ height: '36px', width: '36px', margin: '1px' }} // 固定尺寸，保证整齐
+            style={{ height: '35px', width: '35px', margin: '1px' }} // 固定尺寸，保证整齐
           />
         );
       })}

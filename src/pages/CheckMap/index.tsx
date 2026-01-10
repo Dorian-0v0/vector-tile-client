@@ -10,6 +10,7 @@ import { getPanelTitle, getPanelCom, getPanelIcon, PanelRenderer } from "@/compo
 import LayerList from "@/components/LayerList/LayerList";
 import TestDnd1 from "@/components/LayerList/testdnd1";
 import { LayerList1 } from "@/components/LayerList/testdnd2";
+import ShowPointPostion from "@/components/ShowPointPostion";
 export default function CheckMap() {
   const { token } = theme.useToken(); // 必须在 ConfigProvider 作用域内调用
   const { updateZoomAndCenterAndMap, getMap } = useMapStore()
@@ -28,7 +29,7 @@ export default function CheckMap() {
       mapContainer.style.filter = token.colorBgElevated == "#ffffff" ? 'none' : 'brightness(0.88) contrast(0.95) grayscale(0) hue-rotate(180deg) opacity(1) saturate(2.5) sepia(0.5) invert(1)';
     }
     const map = getMap('map');
-    map?.updateLayerList()  
+    map?.updateLayerList()
     return () => {
       // 获取view的zoom、center、map属性
       if (map?.view?.center) {
@@ -48,6 +49,21 @@ export default function CheckMap() {
       {/* 左侧面板 */}
       <Splitter.Panel defaultSize="15%" min="10%" max="27%" >
         {/* <LayerList></LayerList> */}
+        <div
+          style={{
+            // 居中显示
+            display: 'flex',
+            justifyContent: 'center',
+            // 字体
+            fontSize: '16px',
+            fontFamily: 'ui-rounded',
+            // 粗体
+            fontWeight: 'bold',
+          }}
+
+        >
+          图层列表
+        </div>
         <LayerList1></LayerList1>
       </Splitter.Panel>
       {/* 右侧面板：嵌套垂直分割器 */}
@@ -60,7 +76,13 @@ export default function CheckMap() {
             defaultSize="70%"
             min="30%" // 防止地图被缩得太小
           >
-            <div id="map" />
+            <div id="map">
+              <div
+                className="point_position"
+              >
+                <ShowPointPostion></ShowPointPostion>
+              </div>
+            </div>
           </Splitter.Panel>
           {/* 下：属性表（可隐藏） */}
           <Splitter.Panel
@@ -78,14 +100,22 @@ export default function CheckMap() {
         defaultSize="15%"
         min="14%"
         max="26%"
+        style={{ display: 'flex', flexDirection: 'column', height: '100%' }}
       >
-        <LayerController onToggle={handleToggle} />
-        {/* Panel Header */}
+        {/* 固定头部：LayerController 不滚动 */}
+        <div style={{ flexShrink: 0 }}>
+          <LayerController onToggle={handleToggle} />
+        </div>
+
+        {/* 可滚动区域：仅 PanelRenderer 滚动 */}
         {visiblePanel && (
+
           <PanelRenderer
             visiblePanel={visiblePanel}
             setVisiblePanel={setVisiblePanel}
-          />)}
+          />
+
+        )}
       </Splitter.Panel>
 
     </Splitter>

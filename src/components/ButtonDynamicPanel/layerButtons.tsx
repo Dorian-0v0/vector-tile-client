@@ -135,7 +135,15 @@ export const PanelRenderer: React.FC<PanelRendererProps> = ({
           }}
         />
       </div>
-      {PanelComponent ? React.createElement(PanelComponent) : null}
+      {PanelComponent ?
+        <div style={{
+          flex: 1,
+          overflowY: 'auto',
+          overflowX: 'hidden' // 防止水平滚动（可选）
+        }}>
+         { React.createElement(PanelComponent)}
+        </div>
+        : null}
     </>
   );
 };

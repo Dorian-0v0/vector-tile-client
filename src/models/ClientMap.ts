@@ -11,14 +11,18 @@ import Basemap from '@geoscene/core/Basemap';
 import { message } from "antd";
 import { getLayerName, setRandomFeatureLayerRenderer } from "@/utils/LayerUtils";
 import { useMapStore } from "@/store/useMapStore";
+import ScaleBar from "@geoscene/core/widgets/ScaleBar";
+import OrientedImageryViewer from "@geoscene/core/widgets/OrientedImageryViewer";
 
 
 const tiandituVector = Basemap.fromId("tianditu-vector");
 tiandituVector.thumbnailUrl = "./public/images/天地图矢量.png";
 
 
+
 const tiandituImage = Basemap.fromId("tianditu-image");
 tiandituImage.thumbnailUrl = "./public/images/天地图影像.png";
+
 export default class ClientMap {
     public view: null | MapView = null;
     public bbox: number[] = [73.5, 3.8, 135.0, 58.9];
@@ -34,7 +38,8 @@ export default class ClientMap {
             thumbnailUrl: "./public/images/ArcGIS-影像.png",
             baseLayers: [
                 new WebTileLayer({
-                    urlTemplate: "https://server.arcgisonline.com/arcgis/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}.png"
+                    urlTemplate: "https://server.arcgisonline.com/arcgis/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}.png",
+                    copyright: 'ArcGIS-影像底图'
                 })
             ]
         },
@@ -42,7 +47,8 @@ export default class ClientMap {
             baseLayers: [
                 new WebTileLayer({
                     urlTemplate: "https://webst0{subDomain}.is.autonavi.com/appmaptile?lang=zh_cn&size=1&scale=1&style=7&x={x}&y={y}&z={z}",
-                    subDomains: ["0", "1", "2", "3", "4"]
+                    subDomains: ["0", "1", "2", "3", "4"],
+                    copyright: '高德矢量底图(火星坐标系)'
                 })
             ],
             title: "高德矢量底图(火星坐标系)",
@@ -54,6 +60,7 @@ export default class ClientMap {
                 new WebTileLayer({
                     urlTemplate: "https://webst0{subDomain}.is.autonavi.com/appmaptile?lang=zh_cn&size=1&scale=1&style=6&x={x}&y={y}&z={z}",
                     subDomains: ["0", "1", "2", "3", "4"],
+                    copyright: '高德影像底图(火星坐标系)'
                 })
             ],
             title: "高德影像底图(火星坐标系)",
@@ -109,8 +116,16 @@ export default class ClientMap {
             });
         }
         console.log("this.view", this.view);
-        // this.updateLayerList()
-         
+        // 添加比例尺控件
+        this.view.ui.add(new ScaleBar({
+            view: this.view,
+            unit: "dual"
+        }), {
+            position: "bottom-left"
+        });
+
+       
+
     }
 
 
